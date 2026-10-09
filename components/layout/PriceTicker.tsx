@@ -36,10 +36,9 @@ direction: "down",
 export default function PriceTicker() {
 const items = [...tickerItems, ...tickerItems];
 
-return ( <div className="overflow-hidden border-b border-[var(--border)] bg-[var(--accent-soft)]"> <div className="flex min-h-10 items-center"> <div className="shrink-0 border-r border-[var(--border)] px-4 text-xs font-bold text-[var(--accent-dark)] sm:px-6">
-আজকের দর </div>
+return ( <div className="overflow-hidden border-b border-[var(--border)] bg-[var(--accent-soft)]"> <div className="flex min-h-10 items-center">
 
-    <div className="ticker-track flex min-w-max items-center">
+     <div className="ticker-track flex min-w-max items-center">
       {items.map((item, index) => (
         <div
           key={`${item.name}-${index}`}
@@ -56,9 +55,9 @@ return ( <div className="overflow-hidden border-b border-[var(--border)] bg-[var
           <span
             className={
               item.direction === "up"
-                ? "font-semibold"
+                ? "font-semibold text-[var(--price-up)]"
                 : item.direction === "down"
-                  ? "font-semibold"
+                  ? "font-semibold text-[var(--price-down)]"
                   : "font-semibold text-[var(--muted)]"
             }
           >

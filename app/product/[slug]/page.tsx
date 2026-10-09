@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -9,6 +10,12 @@ import {
 
 import { getProduct } from "@/services/products";
 import type { Product } from "@/types/product";
+import {
+  getMarketPrices as readMarketPrices,
+  getProductChange as readProductChange,
+  getProductImage,
+  getProductPrice as readProductPrice,
+} from "@/lib/product-data";
 
 import {
   formatPercentage,
@@ -22,27 +29,11 @@ interface ProductDetailsPageProps {
 }
 
 function getPrice(product: Product): number {
-  if (product.price !== undefined) {
-    return Number(product.price) || 0;
-  }
-
-  if (product.prices && product.prices.length > 0) {
-    return Number(product.prices[0]?.price) || 0;
-  }
-
-  return 0;
+  return readProductPrice(product) ?? 0;
 }
 
 function getChange(product: Product): number {
-  if (product.change !== undefined) {
-    return Number(product.change) || 0;
-  }
-
-  if (product.prices && product.prices.length > 0) {
-    return Number(product.prices[0]?.change) || 0;
-  }
-
-  return 0;
+  return readProductChange(product);
 }
 
 function getChangeInfo(change: number) {
@@ -70,7 +61,7 @@ function getChangeInfo(change: number) {
 }
 
 function getMarketPrices(product: Product) {
-  return product.prices ?? [];
+  return readMarketPrices(product);
 }
 
 function getPriceStats(product: Product) {
@@ -148,6 +139,7 @@ export default async function ProductDetailsPage({
   const changeInfo = getChangeInfo(change);
   const stats = getPriceStats(product);
   const marketPrices = getMarketPrices(product);
+  const productImage = getProductImage(product);
 
   return (
     <main>
@@ -179,9 +171,9 @@ export default async function ProductDetailsPage({
               className="absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-white/60 blur-3xl"
             />
 
-            {product.image ? (
+            {productImage ? (
               <img
-                src={product.image}
+                src={productImage}
                 alt={product.name}
                 className="relative h-64 w-64 object-contain drop-shadow-lg sm:h-72 sm:w-72"
               />
@@ -380,8 +372,7 @@ export default async function ProductDetailsPage({
               </p>
 
               <p className="mt-1 text-sm text-[var(--muted)]">
-                এই পণ্যের জন্য বর্তমানে কোনো বাজার তথ্য
-                নেই।
+                এই পণ্যের জন্য বর্তমানে কোনো বাজার তথ্য নেই।
               </p>
             </div>
           )}

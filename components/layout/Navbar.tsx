@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   LogOut,
   Menu,
-  ShoppingBasket,
   User,
   X,
 } from "lucide-react";
@@ -20,27 +20,27 @@ const categories = [
     href: "/#সব-পণ্য",
   },
   {
-    label: "চাল",
+    label: "🍚চাল",
     href: "/category/chal",
   },
   {
-    label: "ডাল",
+    label: "🍲ডাল",
     href: "/category/dal",
   },
   {
-    label: "তেল",
+    label: "🫙তেল",
     href: "/category/tel",
   },
   {
-    label: "মাছ",
+    label: "🐟মাছ",
     href: "/category/mach",
   },
   {
-    label: "মাংস",
+    label: "🍗মাংস",
     href: "/category/mangsho",
   },
   {
-    label: "সবজি",
+    label: "🧄সবজি",
     href: "/category/shobji",
   },
 ];
@@ -87,8 +87,14 @@ export default function Navbar() {
           className="flex shrink-0 items-center gap-3"
           onClick={() => setMobileOpen(false)}
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)] text-white">
-            <ShoppingBasket size={21} />
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)]">
+            <Image
+              src="/logo-icon.png"
+              alt="বাজার দর"
+              width={28}
+              height={28}
+              className="h-7 w-7 object-contain"
+            />
           </span>
 
           <div className="hidden sm:block">
@@ -96,9 +102,7 @@ export default function Navbar() {
               বাজার দর
             </p>
 
-            <p className="text-xs text-[var(--muted)]">
-              আজকের বাজারের খবর
-            </p>
+            <BanglaDate />
           </div>
         </Link>
 
@@ -117,8 +121,6 @@ export default function Navbar() {
 
         {/* Desktop Right */}
         <div className="hidden shrink-0 items-center gap-3 sm:flex">
-          <BanglaDate />
-
           {loading ? (
             <div className="h-9 w-24 animate-pulse rounded-lg bg-slate-200" />
           ) : user ? (
@@ -188,9 +190,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="border-t border-[var(--border)] px-4 pb-5 pt-3 lg:hidden">
-          <div className="mb-3 border-b border-[var(--border)] pb-3">
-            <BanglaDate />
-          </div>
+          
 
           <nav className="flex flex-col gap-1">
             {categories.map((category) => (

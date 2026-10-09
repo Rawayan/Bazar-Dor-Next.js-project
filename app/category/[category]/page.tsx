@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -5,6 +6,7 @@ import { ArrowDownUp, RefreshCw } from "lucide-react";
 
 import { getProductsByCategory } from "@/services/products";
 import type { Product } from "@/types/product";
+import { getProductPrice as readProductPrice } from "@/lib/product-data";
 import type { SortOrder } from "@/types";
 
 import ProductCard from "@/components/products/ProductCard";
@@ -26,15 +28,7 @@ const categoryNames: Record<string, string> = {
 };
 
 function getProductPrice(product: Product): number {
-  if (product.price !== undefined) {
-    return Number(product.price) || 0;
-  }
-
-  if (product.prices && product.prices.length > 0) {
-    return Number(product.prices[0]?.price) || 0;
-  }
-
-  return 0;
+  return readProductPrice(product) ?? 0;
 }
 
 function getCategoryName(category: string): string {
@@ -42,9 +36,7 @@ function getCategoryName(category: string): string {
     categoryNames[category.toLowerCase()] ||
     category
       .replace(/-/g, " ")
-      .replace(/\b\w/g, (letter) =>
-        letter.toUpperCase()
-      )
+      .replace(/\b\w/g, (letter) => letter.toUpperCase())
   );
 }
 
@@ -74,10 +66,7 @@ export default function CategoryPage({
 
         setProducts(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error(
-          "Failed to load category products:",
-          err
-        );
+        console.error("Failed to load category products:", err);
 
         setError(
           "এই ক্যাটাগরির পণ্য লোড করা যায়নি। আবার চেষ্টা করুন।"
@@ -95,17 +84,13 @@ export default function CategoryPage({
 
     if (sortOrder === "price-asc") {
       return result.sort(
-        (a, b) =>
-          getProductPrice(a) -
-          getProductPrice(b)
+        (a, b) => getProductPrice(a) - getProductPrice(b)
       );
     }
 
     if (sortOrder === "price-desc") {
       return result.sort(
-        (a, b) =>
-          getProductPrice(b) -
-          getProductPrice(a)
+        (a, b) => getProductPrice(b) - getProductPrice(a)
       );
     }
 
@@ -116,7 +101,6 @@ export default function CategoryPage({
 
   return (
     <main className="min-h-screen bg-[var(--background)]">
-      {/* Header */}
       <section className="border-b border-[var(--border)] bg-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
           <p className="text-sm font-bold text-[var(--accent)]">
@@ -135,7 +119,6 @@ export default function CategoryPage({
               </p>
             </div>
 
-            {/* Sorting */}
             {!loading && !error && products.length > 0 && (
               <div className="flex shrink-0 items-center gap-2">
                 <ArrowDownUp
@@ -143,10 +126,7 @@ export default function CategoryPage({
                   className="text-[var(--muted)]"
                 />
 
-                <label
-                  htmlFor="price-sort"
-                  className="sr-only"
-                >
+                <label htmlFor="price-sort" className="sr-only">
                   পণ্য সাজানোর পদ্ধতি
                 </label>
 
@@ -160,14 +140,10 @@ export default function CategoryPage({
                   }
                   className="rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--foreground)] outline-none transition focus:border-[var(--accent)]"
                 >
-                  <option value="default">
-                    ডিফল্ট
-                  </option>
-
+                  <option value="default">ডিফল্ট</option>
                   <option value="price-asc">
                     দাম: কম থেকে বেশি
                   </option>
-
                   <option value="price-desc">
                     দাম: বেশি থেকে কম
                   </option>
@@ -178,32 +154,23 @@ export default function CategoryPage({
         </div>
       </section>
 
-      {/* Products */}
       <section>
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-          {/* Loading */}
           {loading && (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {Array.from({ length: 6 }).map(
-                (_, index) => (
-                  <ProductCardSkeleton key={index} />
-                )
-              )}
+              {Array.from({ length: 6 }).map((_, index) => (
+                <ProductCardSkeleton key={index} />
+              ))}
             </div>
           )}
 
-          {/* Error */}
           {!loading && error && (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-8 text-center">
-              <p className="font-bold text-red-700">
-                {error}
-              </p>
+              <p className="font-bold text-red-700">{error}</p>
 
               <button
                 type="button"
-                onClick={() => {
-                  window.location.reload();
-                }}
+                onClick={() => window.location.reload()}
                 className="mt-5 inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
               >
                 <RefreshCw size={16} />
@@ -212,7 +179,6 @@ export default function CategoryPage({
             </div>
           )}
 
-          {/* Empty */}
           {!loading &&
             !error &&
             sortedProducts.length === 0 && (
@@ -230,7 +196,6 @@ export default function CategoryPage({
               </div>
             )}
 
-          {/* Product Grid */}
           {!loading &&
             !error &&
             sortedProducts.length > 0 && (
@@ -247,9 +212,7 @@ export default function CategoryPage({
                   {sortOrder !== "default" && (
                     <button
                       type="button"
-                      onClick={() =>
-                        setSortOrder("default")
-                      }
+                      onClick={() => setSortOrder("default")}
                       className="text-sm font-semibold text-[var(--accent-dark)] hover:underline"
                     >
                       সাজানো বন্ধ করুন
