@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import PriceTicker from "@/components/layout/PriceTicker";
 import ToastProvider from "@/components/providers/ToastProvider";
+import AuthProvider from "@/providers/AuthProvider";
 
 export const metadata: Metadata = {
   title: "বাজার দর",
@@ -19,12 +20,14 @@ export default function RootLayout({
   return (
     <html lang="bn">
       <body>
-        <Navbar />
-        <PriceTicker />
+        <AuthProvider>
+          <Navbar />
+          <PriceTicker />
 
-        {children}
+          {children}
 
-        <ToastProvider />
+          <ToastProvider />
+        </AuthProvider>
       </body>
     </html>
   );
