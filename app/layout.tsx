@@ -3,7 +3,7 @@ import "./globals.css";
 
 import Navbar from "@/components/layout/Navbar";
 import PriceTicker from "@/components/layout/PriceTicker";
-import ToastProvider from "@/components/providers/ToastProvider";
+import ToastProvider from "@/providers/ToastProvider";
 import AuthProvider from "@/providers/AuthProvider";
 
 export const metadata: Metadata = {

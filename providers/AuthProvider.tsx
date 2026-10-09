@@ -10,8 +10,10 @@ import {
 
 import { authClient } from "@/lib/auth-client";
 
+type AuthUser = typeof authClient.$Infer.Session.user;
+
 interface AuthContextValue {
-  user: typeof authClient.$Infer.Session.user | null;
+  user: AuthUser | null;
   loading: boolean;
   refreshSession: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -25,23 +27,15 @@ export default function AuthProvider({
 }: {
   children: ReactNode;
 }) {
-  const [user, setUser] = useState<
-    typeof authClient.$Infer.Session.user | null
-  >(null);
-
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function refreshSession() {
     try {
       const { data } = await authClient.getSession();
-
       setUser(data?.user ?? null);
     } catch (error) {
-      console.error(
-        "Failed to refresh session:",
-        error
-      );
-
+      console.error("Failed to refresh session:", error);
       setUser(null);
     }
   }
@@ -51,17 +45,13 @@ export default function AuthProvider({
 
     async function loadSession() {
       try {
-        const { data } =
-          await authClient.getSession();
+        const { data } = await authClient.getSession();
 
         if (mounted) {
           setUser(data?.user ?? null);
         }
       } catch (error) {
-        console.error(
-          "Failed to load session:",
-          error
-        );
+        console.error("Failed to load session:", error);
 
         if (mounted) {
           setUser(null);
@@ -73,7 +63,7 @@ export default function AuthProvider({
       }
     }
 
-    loadSession();
+    void loadSession();
 
     return () => {
       mounted = false;
@@ -81,18 +71,15 @@ export default function AuthProvider({
   }, []);
 
   async function signOut() {
-    try {
-      await authClient.signOut();
+    const { error } = await authClient.signOut();
 
-      setUser(null);
-    } catch (error) {
-      console.error(
-        "Failed to sign out:",
-        error
+    if (error) {
+      throw new Error(
+        error.message || "Sign out failed."
       );
-
-      throw error;
     }
+
+    setUser(null);
   }
 
   return (
@@ -114,7 +101,7 @@ export function useAuth() {
 
   if (!context) {
     throw new Error(
-      "useAuth must be used inside AuthProvider"
+      "useAuth must be used inside AuthProvider."
     );
   }
 
