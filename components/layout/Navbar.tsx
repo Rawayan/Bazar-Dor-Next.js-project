@@ -104,8 +104,8 @@ export default function Navbar() {
               />
             </span>
 
-            <div className="hidden sm:block">
-              <p className="text-lg font-bold tracking-tight">
+            <div className="block sm:flex flex-col">
+              <p className="text-base font-bold tracking-tight sm:text-lg">
                 বাজার দর
               </p>
 

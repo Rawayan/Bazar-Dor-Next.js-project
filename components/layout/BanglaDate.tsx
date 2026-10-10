@@ -12,13 +12,13 @@ export default function BanglaDate() {
 
   if (!date) {
     return (
-      <span className="hidden text-xs text-[var(--muted)] md:block">
+      <span className="text-xs text-[var(--muted)]">
         আজকের তারিখ{" "}
       </span>
     );
   }
 
   return (
-    <span className="hidden text-xs text-[var(--muted)] md:block">{date} </span>
+    <span className="text-xs text-[var(--muted)]">{date} </span>
   );
 }
