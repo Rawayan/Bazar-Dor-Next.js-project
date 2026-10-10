@@ -1,5 +1,6 @@
 export interface ProductMarket {
   market: string;
+  division?: string;
   district?: string;
   location?: string;
   min: number;

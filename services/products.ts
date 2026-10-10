@@ -22,6 +22,7 @@ type ApiProduct = {
   markets?: Array<{
     market: string;
     district?: string;
+    division?: string;
     location?: string;
     min: number;
     max: number;
@@ -55,7 +56,8 @@ function normalizeProduct(item: ApiProduct): Product {
   const markets: ProductMarket[] = (item.markets ?? []).map(
     (market) => ({
       market: market.market,
-      district: market.district,
+      division: market.division || market.district,
+      district: market.division || market.district,
       location: market.location,
       min: Number(market.min) || 0,
       max: Number(market.max) || 0,

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Suspense } from "react";
 
 import Navbar from "@/components/layout/Navbar";
 import PriceTicker from "@/components/layout/PriceTicker";
@@ -21,7 +22,9 @@ export default function RootLayout({
     <html lang="bn">
       <body>
         <AuthProvider>
-          <Navbar />
+          <Suspense fallback={<div className="h-20 border-b border-[var(--border)] bg-[var(--background)]" />}>
+            <Navbar />
+          </Suspense>
           <PriceTicker />
 
           {children}

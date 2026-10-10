@@ -64,8 +64,9 @@ export default function SignUpPage() {
         toast.success(
           "অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।"
         );
-
-        window.location.href = "/";
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
       }
     } catch (error) {
       console.error("Sign up error:", error);

@@ -195,7 +195,7 @@ export default async function ProductDetailsPage({
                   <thead className="bg-[#f8faf7] text-[#747c73]">
                     <tr>
                       <th className="px-4 py-3 font-medium">বাজার</th>
-                      <th className="px-4 py-3 font-medium">জেলা</th>
+                      <th className="px-4 py-3 font-medium">বিভাগ</th>
                       <th className="px-4 py-3 text-right font-medium">
                         সর্বনিম্ন
                       </th>
@@ -222,7 +222,7 @@ export default async function ProductDetailsPage({
                           {market.market}
                         </td>
                         <td className="px-4 py-3 text-[#666f65]">
-                          {market.district || market.location || "—"}
+                          {market.division || market.district || market.location || "—"}
                         </td>
                         <td className="px-4 py-3 text-right">
                           {formatPrice(market.min)}

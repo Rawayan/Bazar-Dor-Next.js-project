@@ -54,8 +54,9 @@ export default function SignInPage() {
 
       if (data) {
         toast.success("সফলভাবে সাইন ইন হয়েছে।");
-
-        window.location.href = "/";
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
       }
     } catch (error) {
       console.error("Sign in error:", error);
