@@ -1,3 +1,11 @@
+export interface ProductMarket {
+  market: string;
+  district?: string;
+  location?: string;
+  min: number;
+  max: number;
+}
+
 export interface ProductPrice {
   market: string;
   price: number;
@@ -9,11 +17,17 @@ export interface Product {
   name: string;
   slug: string;
   category: string;
+  categoryName?: string;
   unit: string;
   description?: string;
   image?: string;
   emoji?: string;
-  prices?: ProductPrice[];
   price?: number;
   change?: number;
+  yesterday?: number;
+  lastWeek?: number;
+  lastMonth?: number;
+  markets?: ProductMarket[];
+  prices?: ProductPrice[];
 }
+

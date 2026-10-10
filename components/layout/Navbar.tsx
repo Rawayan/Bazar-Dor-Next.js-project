@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   LogOut,
   Menu,
@@ -40,7 +41,7 @@ const categories = [
     href: "/category/mangsho",
   },
   {
-    label: "🧄সবজি",
+    label: "🥬সবজি",
     href: "/category/shobji",
   },
 ];
@@ -48,6 +49,8 @@ const categories = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] =
     useState(false);
+
+  const pathname = usePathname();
 
   const {
     user,
@@ -80,7 +83,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur">
-      <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-6 px-10 sm:px-10 lg:px-10">
         {/* Logo */}
         <Link
           href="/"
@@ -150,14 +153,22 @@ export default function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 href="/signin"
-                className="rounded-lg px-4 py-2 text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--accent-dark)]"
+                className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+                  pathname === "/signin"
+                    ? "border-[var(--accent)] bg-[var(--accent)] text-white"
+                    : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent-dark)]"
+                }`}
               >
                 সাইন ইন
               </Link>
 
               <Link
                 href="/signup"
-                className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+                  pathname === "/signup"
+                    ? "border-[var(--accent)] bg-[var(--accent)] text-white"
+                    : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent-dark)]"
+                }`}
               >
                 সাইন আপ
               </Link>
@@ -250,7 +261,11 @@ export default function Navbar() {
                   onClick={() =>
                     setMobileOpen(false)
                   }
-                  className="rounded-lg border border-[var(--border)] px-4 py-3 text-center text-sm font-semibold"
+                  className={`rounded-lg border px-4 py-3 text-center text-sm font-semibold transition ${
+                    pathname === "/signin"
+                      ? "border-[var(--accent)] bg-[var(--accent)] text-white"
+                      : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)]"
+                  }`}
                 >
                   সাইন ইন
                 </Link>
@@ -260,7 +275,11 @@ export default function Navbar() {
                   onClick={() =>
                     setMobileOpen(false)
                   }
-                  className="rounded-lg bg-[var(--accent)] px-4 py-3 text-center text-sm font-semibold text-white"
+                  className={`rounded-lg border px-4 py-3 text-center text-sm font-semibold transition ${
+                    pathname === "/signup"
+                      ? "border-[var(--accent)] bg-[var(--accent)] text-white"
+                      : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)]"
+                  }`}
                 >
                   সাইন আপ
                 </Link>

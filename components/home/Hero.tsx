@@ -40,23 +40,16 @@ export default function Hero() {
             >
               সব পণ্যের দাম দেখুন
             </Link>
-
-            <Link
-              href="/signin"
-              className="hero-button hero-button-secondary"
-            >
-              🛒 বাজার তুলনা
-            </Link>
           </div>
         </div>
 
         {/* Right side: Vegetable basket image */}
         <div className="hero-visual">
-          <Image
+<Image
             src="/bazar-hero.png"
-            alt="বাজারের সবজির ঝুড়ি"
-            width={300}
-            height={240}
+            alt="বাজারের সবজির ঝুড়ি"
+            width={400}
+            height={320}
             priority
             className="hero-image"
           />
