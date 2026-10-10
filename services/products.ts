@@ -1,4 +1,4 @@
-import { apiFetch } from "@/services/api";
+import { apiFetch, buildQuery } from "@/services/api";
 import type { Product, ProductMarket } from "@/types/product";
 
 type ApiProduct = {
@@ -8,6 +8,7 @@ type ApiProduct = {
   name?: string;
   category?: string;
   categoryNameBn?: string;
+  categoryIcon?: string;
   unit?: string;
   image?: string;
   description?: string;
@@ -70,6 +71,7 @@ function normalizeProduct(item: ApiProduct): Product {
     name: item.nameBn || item.name || "নাম পাওয়া যায়নি",
     category: item.categoryNameBn || item.category || "অন্যান্য",
     categoryName: item.categoryNameBn,
+    categoryIcon: item.categoryIcon,
     unit: item.unit || "কেজি",
     description: item.description,
     emoji: item.image || "🛒",
@@ -134,12 +136,28 @@ export async function getProducts(): Promise<Product[]> {
 
 /**
  * Get a product by its slug.
+ *
+ * Preferred path: server filter `GET /products?slug=<slug>`.
+ * Fallback: full-list find (keeps working if the filter is flaky).
  */
 export async function getProduct(
   slug: string,
 ): Promise<Product> {
-  const products = await getProducts();
   const decodedSlug = decodeURIComponent(slug);
+
+  try {
+    const filtered = await apiFetch<ProductListResponse>(
+      `/products${buildQuery({ slug: decodedSlug })}`,
+    );
+    const matches = normalizeProductList(filtered);
+    const exact = matches.find((item) => item.slug === decodedSlug);
+    if (exact) return exact;
+    if (matches.length === 1) return matches[0];
+  } catch {
+    // Fall through to full-list find below.
+  }
+
+  const products = await getProducts();
 
   const product = products.find(
     (item) => item.slug === decodedSlug,
@@ -189,12 +207,14 @@ const CATEGORY_ALIASES: Record<string, string[]> = {
     "vegetable",
     "vegetables",
     "shobji",
+    "sobji",
   ],
   sobji: [
     "সবজি",
     "সব্জি",
     "vegetable",
     "vegetables",
+    "shobji",
     "sobji",
   ],
   vegetables: [
@@ -205,19 +225,65 @@ const CATEGORY_ALIASES: Record<string, string[]> = {
     "shobji",
     "sobji",
   ],
+
+  "dim-dui": [
+    "ডিম-দুধ",
+    "ডিম",
+    "দুধ",
+    "dim-dui",
+    "dim",
+    "dudh",
+    "doodh",
+    "egg",
+    "eggs",
+    "milk",
+    "dairy",
+  ],
+  dimdui: [
+    "ডিম-দুধ",
+    "ডিম",
+    "দুধ",
+    "dim-dui",
+    "dim",
+    "dudh",
+    "doodh",
+    "egg",
+    "eggs",
+    "milk",
+    "dairy",
+  ],
+
+  mosla: ["মসলা", "মশলা", "mosla", "moshla", "spice", "spices"],
 };
 
 /**
  * Get products belonging to a category.
  *
- * Fetches the full list and filters locally to avoid depending on
- * the API's category query format.
+ * Preferred path: server filter `GET /products?category=<slug>`.
+ * Fallback: full-list alias-based client filter (covers legacy
+ * spellings like `shobji` and offline/flaky filter responses).
  */
 export async function getProductsByCategory(
   category: string,
 ): Promise<Product[]> {
+  const decoded = decodeURIComponent(category);
+  const requestedCategory = normalizeCategory(decoded);
+
+  // Legacy spelling: canonical slug is now `sobji`.
+  const canonical =
+    requestedCategory === "shobji" ? "sobji" : decoded;
+
+  try {
+    const filtered = await apiFetch<ProductListResponse>(
+      `/products${buildQuery({ category: canonical })}`,
+    );
+    const matches = normalizeProductList(filtered);
+    if (matches.length > 0) return matches;
+  } catch {
+    // Fall through to client-side filter below.
+  }
+
   const products = await getProducts();
-  const requestedCategory = normalizeCategory(category);
 
   const aliases =
     CATEGORY_ALIASES[requestedCategory] ?? [category];

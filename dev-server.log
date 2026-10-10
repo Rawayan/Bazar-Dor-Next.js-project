@@ -1,0 +1,142 @@
+
+> bazar-dor@0.1.0 dev
+> next dev
+
+▲ Next.js 16.4.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.3:3000
+- Environments: .env.local
+✓ Ready in 1176ms
+✓ Running next.config.ts took 125ms
+- Cache Components enabled
+- Partial Prefetching enabled
+- Experiments (use with caution):
+  ✓ agentFeedback
+
+ GET / 200 in 1062ms (next.js: 507ms, application-code: 555ms)
+[2m2026-10-10T18:41:45.841Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider google is missing clientId or clientSecret
+[2m2026-10-10T18:41:45.846Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider github is missing clientId or clientSecret
+[2m2026-10-10T18:41:46.039Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider google is missing clientId or clientSecret
+[2m2026-10-10T18:41:46.069Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider github is missing clientId or clientSecret
+[2m2026-10-10T18:41:46.089Z[0m [31mERROR[0m [1m[Better Auth]:[0m Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.
+⨯ [Error [BetterAuthError]: Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.] {
+  code: 'SCHEMA_MISMATCH',
+  findings: [
+    { kind: 'missing-table', table: 'user' },
+    { kind: 'missing-table', table: 'session' },
+    { kind: 'missing-table', table: 'account' },
+    { kind: 'missing-table', table: 'verification' }
+  ],
+  source: 'database'
+}
+ GET /api/auth/get-session 500 in 3.7s (next.js: 3.5s, application-code: 226ms)
+[2m2026-10-10T18:41:45.882Z[0m [31mERROR[0m [1m[Better Auth]:[0m Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.
+⨯ [Error [BetterAuthError]: Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.] {
+  code: 'SCHEMA_MISMATCH',
+  findings: [
+    { kind: 'missing-table', table: 'user' },
+    { kind: 'missing-table', table: 'session' },
+    { kind: 'missing-table', table: 'account' },
+    { kind: 'missing-table', table: 'verification' }
+  ],
+  source: 'database'
+}
+ GET /api/auth/get-session 500 in 34ms (next.js: 13ms, application-code: 21ms)
+[2m2026-10-10T18:41:48.029Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider google is missing clientId or clientSecret
+[2m2026-10-10T18:41:48.035Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider github is missing clientId or clientSecret
+[2m2026-10-10T18:41:48.050Z[0m [31mERROR[0m [1m[Better Auth]:[0m Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.
+ GET / 200 in 81ms (next.js: 6ms, application-code: 75ms)
+ GET /category/sobji 200 in 1830ms (next.js: 26ms, generate-params: 1570ms, application-code: 234ms)
+ GET /category/dim-dui 200 in 162ms (next.js: 4ms, generate-params: 11ms, application-code: 147ms)
+ GET /category/mosla 200 in 152ms (next.js: 6ms, generate-params: 0.1ms, application-code: 146ms)
+ GET /category/shobji 200 in 155ms (next.js: 3ms, generate-params: 0.1ms, application-code: 151ms)
+ GET /category/chal 200 in 154ms (next.js: 3ms, generate-params: 0.1ms, application-code: 151ms)
+○ Compiling /product/[slug] ...
+[2m2026-10-10T18:42:13.142Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider google is missing clientId or clientSecret
+[2m2026-10-10T18:42:13.148Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider github is missing clientId or clientSecret
+[2m2026-10-10T18:42:13.193Z[0m [31mERROR[0m [1m[Better Auth]:[0m Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.
+[2m2026-10-10T18:42:13.327Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider google is missing clientId or clientSecret
+[2m2026-10-10T18:42:13.339Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider github is missing clientId or clientSecret
+[2m2026-10-10T18:42:13.371Z[0m [31mERROR[0m [1m[Better Auth]:[0m Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.
+⨯ [Error [BetterAuthError]: Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.] {
+  code: 'SCHEMA_MISMATCH',
+  findings: [
+    { kind: 'missing-table', table: 'user' },
+    { kind: 'missing-table', table: 'session' },
+    { kind: 'missing-table', table: 'account' },
+    { kind: 'missing-table', table: 'verification' }
+  ],
+  source: 'database',
+  digest: '124146570'
+}
+ GET /product/sorno-machi-chal 200 in 3.4s (next.js: 433ms, generate-params: 2.6s, application-code: 413ms)
+⨯ [Error [BetterAuthError]: Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.] {
+  code: 'SCHEMA_MISMATCH',
+  findings: [
+    { kind: 'missing-table', table: 'user' },
+    { kind: 'missing-table', table: 'session' },
+    { kind: 'missing-table', table: 'account' },
+    { kind: 'missing-table', table: 'verification' }
+  ],
+  source: 'database',
+  digest: '124146570'
+}
+[2m2026-10-10T18:42:14.639Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider google is missing clientId or clientSecret
+[2m2026-10-10T18:42:14.643Z[0m [33mWARN[0m [1m[Better Auth]:[0m Social provider github is missing clientId or clientSecret
+[2m2026-10-10T18:42:14.665Z[0m [31mERROR[0m [1m[Better Auth]:[0m Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.
+○ Compiling /_not-found/page ...
+ GET /api/__migration_check__ 404 in 5.3s (next.js: 5.0s, application-code: 344ms)
+ GET /api/__migration_check__ 404 in 317ms (next.js: 159ms, application-code: 159ms)
+ GET / 200 in 456ms (next.js: 74ms, application-code: 382ms)
+ GET /api/migration-check 200 in 1415ms (next.js: 248ms, application-code: 1166ms)
+ GET / 200 in 128ms (next.js: 14ms, application-code: 114ms)

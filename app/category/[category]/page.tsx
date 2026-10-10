@@ -22,9 +22,13 @@ const categoryNames: Record<string, string> = {
   chal: "চাল",
   dal: "ডাল",
   tel: "তেল",
+  sobji: "সবজি",
+  // Legacy spelling — canonical slug is now `sobji`.
+  shobji: "সবজি",
   mach: "মাছ",
   mangsho: "মাংস",
-  shobji: "সবজি",
+  "dim-dui": "ডিম-দুধ",
+  mosla: "মসলা",
 };
 
 function getProductPrice(product: Product): number {

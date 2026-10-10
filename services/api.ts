@@ -1,11 +1,25 @@
-import { API_BASE_URL, API_FALLBACK_URL } from "@/lib/constants";
+import { API_BASE_URL } from "@/lib/constants";
 
-async function requestFromBase<T>(
-  baseUrl: string,
+export function buildQuery(
+  params: Record<string, string | number | undefined | null>,
+): string {
+  const search = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== "") {
+      search.append(key, String(value));
+    }
+  }
+
+  const query = search.toString();
+  return query ? `?${query}` : "";
+}
+
+export async function apiFetch<T>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<T> {
-  const response = await fetch(`${baseUrl}${endpoint}`, {
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
       Accept: "application/json",
@@ -19,30 +33,5 @@ async function requestFromBase<T>(
   }
 
   return (await response.json()) as T;
-}
-
-export async function apiFetch<T>(
-  endpoint: string,
-  options?: RequestInit,
-): Promise<T> {
-  try {
-    return await requestFromBase<T>(API_BASE_URL, endpoint, options);
-  } catch (primaryError) {
-    // Try the second API if the primary endpoint is unavailable.
-    if (API_FALLBACK_URL !== API_BASE_URL) {
-      try {
-        return await requestFromBase<T>(API_FALLBACK_URL, endpoint, options);
-      } catch (fallbackError) {
-        console.error("Both Bazar-Dor APIs failed", {
-          primaryError,
-          fallbackError,
-          endpoint,
-        });
-        throw fallbackError;
-      }
-    }
-
-    throw primaryError;
-  }
 }
 
