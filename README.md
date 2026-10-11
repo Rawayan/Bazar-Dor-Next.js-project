@@ -5,6 +5,9 @@
 **BazarDor** is a Next.js-based web application that helps users explore the prices of essential products in one place. It provides a convenient way to browse products, compare market prices, track price changes, and stay informed about everyday necessities.
 
 ---
+## Live Link 
+- https://bazar-dor-next-js-project.vercel.app/
+
 
 ## ✨ Key Features
 
