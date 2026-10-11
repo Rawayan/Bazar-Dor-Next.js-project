@@ -1,33 +1,31 @@
-
-import { MongoClient } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
+const dbName = process.env.MONGODB_DB_NAME || "bazar_dor";
+
+if (!uri) {
+  throw new Error(
+    "Missing MONGODB_URI. Add it to .env.local (see .env.example)."
+  );
+}
 
 declare global {
   // eslint-disable-next-line no-var
-  var __mongoClientPromise: Promise<MongoClient> | undefined;
+  var _mongoClient: MongoClient | undefined;
 }
 
-function createClientPromise(): Promise<MongoClient> | null {
-  if (!uri) {
-    return null;
+function getMongoClient(): MongoClient {
+  if (globalThis._mongoClient) {
+    return globalThis._mongoClient;
   }
-  const client = new MongoClient(uri, {
-    serverSelectionTimeoutMS: 5000,
-    connectTimeoutMS: 5000,
-  });
-  return client.connect();
+
+  const client = new MongoClient(uri as string);
+  globalThis._mongoClient = client;
+  return client;
 }
 
-const clientPromise =
-  globalThis.__mongoClientPromise ?? createClientPromise();
+export const mongoClient = getMongoClient();
 
-if (clientPromise) {
-  globalThis.__mongoClientPromise = clientPromise;
-  // Prevent unhandled rejection crashing dev server when Atlas is
-  // unreachable (IP not whitelisted, cluster paused, offline, ...).
-  // Auth layer will fall back to SQLite in that case.
-  clientPromise.catch(() => {});
+export function getDb(): Db {
+  return mongoClient.db(dbName);
 }
-
-export default clientPromise;
